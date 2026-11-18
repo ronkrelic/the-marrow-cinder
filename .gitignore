@@ -1,0 +1,8 @@
+assets/packs/**/FBX/
+assets/packs/**/OBJ/
+assets/packs/**/Blends/
+assets/packs/**/Blend/
+assets/packs/**/fbx/
+assets/packs/**/obj/
+assets/packs/**/blends/
+*.zip
