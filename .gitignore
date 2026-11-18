@@ -6,3 +6,11 @@ assets/packs/**/fbx/
 assets/packs/**/obj/
 assets/packs/**/blends/
 *.zip
+
+
+# tool artifacts
+.fbx
+.obj
+.mtl
+.url
+desktop.ini
