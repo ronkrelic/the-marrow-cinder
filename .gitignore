@@ -9,8 +9,8 @@ assets/packs/**/blends/
 
 
 # tool artifacts
-.fbx
-.obj
-.mtl
-.url
+*.fbx
+*.obj
+*.mtl
+*.url
 desktop.ini
