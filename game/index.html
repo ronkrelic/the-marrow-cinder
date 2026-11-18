@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Marrow-Cinder — Barrow's End</title><style>html,body{margin:0;height:100%;overflow:hidden;background:#777976;color:#d4d1c7;font-family:Georgia,serif}canvas{display:block}#veil{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse,transparent 35%,#11131688 100%)}#entry{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;background:#11151699;cursor:pointer}article{padding:36px;max-width:760px}h1{font-size:clamp(28px,5vw,58px);font-weight:400;letter-spacing:.15em;margin:12px 0}h2{font-weight:400;font-size:19px;letter-spacing:.15em}p{color:#bdbdb5;line-height:1.8}small{display:block;margin-top:44px;font:12px monospace;letter-spacing:.08em}#error{display:none;color:#ded8ce}</style></head><body><div id="veil"></div><div id="entry"><article><p>— A GRAVE-WARDEN RETURNS —</p><h1>THE MARROW-CINDER</h1><h2>Barrow's End - a first walk</h2><p>The spire is silent. The mist is not.</p><small id="hint">Click to enter - WASD to walk, mouse to look, ESC to release</small><p id="error"></p></article></div><script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<title>The Marrow-Cinder — Barrow's End</title><style>html,body{margin:0;height:100%;overflow:hidden;background:#777976;color:#d4d1c7;font-family:Georgia,serif}canvas{display:block}#veil{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse,transparent 35%,#11131688 100%)}#entry{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;background:#11151699;cursor:pointer}article{padding:36px;max-width:760px}h1{font-size:clamp(28px,5vw,58px);font-weight:400;letter-spacing:.15em;margin:12px 0}h2{font-weight:400;font-size:19px;letter-spacing:.15em}p{color:#bdbdb5;line-height:1.8}small{display:block;margin-top:44px;font:12px monospace;letter-spacing:.08em}#error{display:none;color:#ded8ce}</style></head><body><div id="veil"></div><div id="entry"><article><p>— A GRAVE-WARDEN RETURNS —</p><h1>THE MARROW-CINDER</h1><h2>Barrow's End - a first walk</h2><p>The spire is silent. The mist is not.</p><small id="hint">Click to enter - WASD to walk, mouse to look, ESC to release</small><p id="error"></p></article></div><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script><script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 // All geometry and surface maps are generated here. No external assets.
 const scene=new THREE.Scene(),fogColor=0x777b78;scene.background=new THREE.Color(fogColor);scene.fog=new THREE.FogExp2(fogColor,.032);
 const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.6));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.08;document.body.prepend(renderer.domElement);
@@ -25,7 +27,53 @@ const glow=new THREE.MeshBasicMaterial({color:0x8252ba});mesh(new THREE.Cylinder
 mesh(new THREE.CylinderGeometry(1.1,1.2,.8,10,1,true),stone,-4,.4,5);mesh(new THREE.CircleGeometry(.96,12),dark,-4,.03,5).rotation.x=-Math.PI/2;for(const x of [-5.1,-2.9])box(wood,x,1.4,5,.15,2.8,.18);rod(v(-5.2,2.7,5),v(-2.8,2.7,5),.12);rod(v(-4,2.7,5),v(-4,1.5,5),.025);colliders.push({x:-4,z:5,w:1.45,d:1.45});
 // Eight readable gestures: reaching, kneeling, sheltering, and a slumped return.
 function statue(x,z,pose,scale=1,turn=0){const g=new THREE.Group();scene.add(g);g.position.set(x,0,z);g.rotation.y=turn;g.scale.setScalar(scale);const crouch=pose===2||pose===3;const hip=crouch?.59:.93,shoulder=crouch?1.04:1.47;mesh(new THREE.CylinderGeometry(.19,.24,shoulder-hip,6),bone,0,(hip+shoulder)/2,0,1,1,1,g);mesh(sphereGeo,bone,pose===3?.18:0,shoulder+.23,.02,.16,.21,.16,g);for(const s of [-1,1]){const knee=v(s*.13,.45,crouch?.32:.02);rod(v(s*.13,hip,0),knee,.09,bone,g);rod(knee,v(s*.18,.08,crouch?.03:.08),.075,bone,g);const elbow=v(s*.37,pose===0?1.62:shoulder-.2,pose===0?-.25:.22);const hand=v(s*(pose===2?.23:.48),pose===0?1.86:pose===1?1.46:.7,pose===0?-.57:.4);rod(v(s*.22,shoulder,0),elbow,.075,bone,g);rod(elbow,hand,.06,bone,g);mesh(sphereGeo,bone,hand.x,hand.y,hand.z,.07,.09,.07,g)}const dust=mesh(new THREE.CircleGeometry(.55,12),stone,0,.012,0,1,1,1,g);dust.rotation.x=-Math.PI/2;colliders.push({x,z,w:.5*scale,d:.5*scale})}
-statue(-2,14,0,1,.4);statue(5.8,10,1,1,-.8);statue(6,10.55,2,.55,.3);statue(-7,5,3,1,-.7);statue(4,-.5,0,1,-1.2);statue(-5,-9,2,1,1.3);statue(9,-10,1,1,-.8);statue(-8,19.7,3,1,1.6);
+// Load real Kenney characters; remove glTF texture references before parsing.
+const statueStatus=window.statueStatus=[];
+const loader=new GLTFLoader();
+async function character(file,x,z,pose,height,turn){
+ const status={file,x,z,pose,targetHeight:height,state:'loading'};statueStatus.push(status);
+ try{
+  const url='../assets/packs/kenney-mini-characters/Models/GLB%20format/'+file+'.glb';
+  const response=await fetch(url);if(!response.ok)throw new Error('HTTP '+response.status);
+  const bytes=await response.arrayBuffer(),view=new DataView(bytes);
+  if(view.getUint32(0,true)!==0x46546c67)throw new Error('Invalid GLB');
+  const jsonLength=view.getUint32(12,true);const json=JSON.parse(new TextDecoder().decode(new Uint8Array(bytes,20,jsonLength)));
+  // Embedded BIN stays intact; eliminating original materials prevents colormap requests.
+  json.materials=[{name:'calcified'}];for(const m of json.meshes||[])for(const p of m.primitives)p.material=0;
+  delete json.textures;delete json.images;delete json.samplers;
+  const encoded=new TextEncoder().encode(JSON.stringify(json)),padded=Math.ceil(encoded.length/4)*4;
+  const tail=new Uint8Array(bytes,20+jsonLength),rebuilt=new ArrayBuffer(20+padded+tail.length),rv=new DataView(rebuilt);
+  rv.setUint32(0,0x46546c67,true);rv.setUint32(4,2,true);rv.setUint32(8,rebuilt.byteLength,true);rv.setUint32(12,padded,true);rv.setUint32(16,0x4e4f534a,true);
+  new Uint8Array(rebuilt,20,padded).fill(32);new Uint8Array(rebuilt,20,encoded.length).set(encoded);new Uint8Array(rebuilt,20+padded).set(tail);
+  const gltf=await loader.parseAsync(rebuilt,''),model=gltf.scene;model.updateMatrixWorld(true);
+  const bounds=new THREE.Box3().setFromObject(model),native=bounds.getSize(new THREE.Vector3()).y;
+  if(!Number.isFinite(native)||native<.01)throw new Error('Invalid model height');status.nativeHeight=native;
+  const wrapper=new THREE.Group();wrapper.add(model);const scale=height/native;model.scale.setScalar(scale);model.position.y=-bounds.min.y*scale;
+  const tint=bone.clone();tint.color.multiplyScalar(.94+statueStatus.indexOf(status)*.008);
+  let meshes=0;model.traverse(o=>{if(o.isMesh){o.material=tint;meshes++;o.frustumCulled=false}});
+  // Pose the actual skinned model's named bones; no animation mixer (frozen forever).
+  const limb=(name,rx,rz)=>{const b=model.getObjectByName(name);if(b){b.rotation.x+=rx;b.rotation.z+=rz}};
+  if(pose===0){limb('arm-left',-1.15,-.45);limb('arm-right',-.9,.55)}
+  if(pose===1){limb('arm-left',-.65,-.8);limb('arm-right',-.85,.75);limb('head',.2,0)}
+  if(pose===2){limb('leg-left',-.48,0);limb('leg-right',.4,0);limb('arm-left',.3,-.9);limb('arm-right',-.3,.9)}
+  if(pose===3){wrapper.rotation.z=.98;wrapper.rotation.x=-.25;limb('head',.4,.15);limb('arm-left',.3,-1.1);limb('arm-right',.5,1)}
+  wrapper.rotation.y=turn;wrapper.position.set(x,0,z);wrapper.updateMatrixWorld(true);
+  const posed=new THREE.Box3().setFromObject(wrapper);wrapper.position.y-=posed.min.y;scene.add(wrapper);
+  const dust=mesh(new THREE.CircleGeometry(.55,12),stone,x,.012,z);dust.rotation.x=-Math.PI/2;
+  colliders.push({x,z,w:height<1.2?.275:.5,d:height<1.2?.275:.5});
+  Object.assign(status,{state:'loaded',meshes,materialOverride:true,textureFree:!tint.map||tint.map===bone.map});
+ }catch(error){statue(x,z,pose,height/1.72,turn);status.state='fallback';status.error=String(error);console.warn('Calcified character fallback:',file,error)}
+}
+window.statuesReady=Promise.all([
+ character('character-male-a',-2,14,0,1.74,.4),
+ character('character-female-b',5.8,10,1,1.68,-.8),
+ character('character-male-c',6,10.55,2,.95,.3),
+ character('character-worker',-7,5,3,1.76,-.7),
+ character('character-female-d',4,-.5,0,1.7,-1.2),
+ character('character-male-f',-5,-9,2,1.72,1.3),
+ character('character-female-f',9,-10,2,1.65,-.8),
+ character('character-male-b',-8,19.7,3,1.78,1.6)
+]);
 // Palisade gap frames the first sightline; ash wastes extend beyond it.
 for(let i=0;i<132;i++){const a=i/132*Math.PI*2;const x=Math.sin(a)*24,z=Math.cos(a)*27;if(z>24&&Math.abs(x)<3.6)continue;const h=range(1.7,2.5);mesh(new THREE.CylinderGeometry(.04,.18,h,5),wood,x,h/2,z)}for(const s of [-1,1]){const p=box(wood,s*3.6,2,26.4,.45,4,.55);p.rotation.z=s*.13;rod(v(s*3.6,3.7,26.4),v(s*.9,3.2,26.4),.16);for(let i=0;i<3;i++){const b=box(wood,s*(3+i*.35),.15,28+i*.4,.16,.18,2.8);b.rotation.y=s*.5}}
 for(let i=0;i<19;i++){const a=rand()*Math.PI*2,r=range(18,43),x=Math.cos(a)*r,z=Math.sin(a)*r;const h=range(3,7);rod(v(x,0,z),v(x+.25,h,z),.19,wood,scene,.07);for(let j=0;j<3;j++){const y=h*(.4+j*.16),s=j%2?1:-1;rod(v(x,y,z),v(x+s*range(1,2.3),y+1.7,z+range(-1,1)),.065,wood,scene,.015)}}
