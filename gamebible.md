@@ -115,6 +115,100 @@ Every time you socket a Memory-Marrow or use Slag-Shard abilities, your Corrupti
 
 (Note: Corruption can be purged at great cost by burning rare Saint-Tears at an intact Pyre-Spire, violently ripping socketed Marrow out of your chest and resetting your humanity—at the price of permanently destroying the slotted abilities.)
 
+## Common Aberrations (The Withering-Touched)
+
+### 1. Calcified Husk
+
+**Location:** Barrow's End Outskirts, Bleakmire
+
+**Visual Design:** Former villagers caught outside when the spire died. Their skin has hardened into cracked, chalk-white limestone, with hollow eye sockets weeping gray dust. Pieces of rusted farming tools or iron shackles are fused directly into their stone-like forearms.
+
+**Behavior & Attack Patterns:** Slow and shambling alone, but lethal in groups. They telegraph wide, heavy overhead slams that deal high posture damage and spray bursts of calcifying dust on impact. When brought below 20% health, they lock their limbs and detonate in a localized miasma cloud.
+
+**Memory-Marrow Drop:** Stone-Skin Echo (Outer Ring — Parasite): Increases physical defense by 15% and prevents flinching from light attacks, but reduces dodge roll distance by 20%.
+
+### 2. Mire-Leaper (Bog-Hound)
+
+**Location:** The Bleakmire
+
+**Visual Design:** Emaciated, hairless wolves whose ribs have burst outward through their hide like jagged ivory cages. Their jaws are unhinged, dripping black, viscous bog-sludge that hisses on contact with metal.
+
+**Behavior & Attack Patterns:** Ambush predators that submerge beneath shallow ash-pools until the player passes. They attack in packs of three, using erratic side-steps to flank the player and lunging for throat-grabs that rapidly drain stamina and inflict Blight.
+
+**Memory-Marrow Drop:** Feral Lunge (Inner Ring — Vessel): Replaces your standard forward dodge with a low, clawing pounce that closes distance rapidly and deals light stagger damage to enemies on contact.
+
+### 3. Tallow-Bloated Cinder-Thrall
+
+**Location:** Ossuary Mines, High Ossuary Lower Levels
+
+**Visual Design:** Hulking, hunched laborers whose bodies have swelled with rendered corpse-fat and volatile swamp gas. Iron hooks pierce their shoulders, trailing heavy chains, while a faint violet glow shines through the stretched, translucent skin of their bellies.
+
+**Behavior & Attack Patterns:** Charges wildly with its head down, swinging heavy iron chains in wide sweeping arcs. If struck with fire damage—or if its belly is ruptured by a thrusting attack—it violently combusts, scorching everything in a 10-foot radius.
+
+**Memory-Marrow Drop:** Volatile Bile (Middle Ring — Aspect): Expend stamina and Corruption to vomit a cone of ignited tallow, coating enemies in flammable grease that detonates on the next fire hit.
+
+## Elite Foes (Factions & Cultists)
+
+### 4. Cinder-Church Flagellant
+
+**Location:** Roads to the High Ossuary, Cathedral Steps
+
+**Visual Design:** Towering, gaunt zealots draped in scorched, blood-caked cassocks. They wear locked iron cage-helms stuffed with smoldering coals, continuously burning their own faces. They wield massive, spiked iron censers on five-foot chains.
+
+**Behavior & Attack Patterns:** Hyper-aggressive and immune to stagger while mid-swing. They whip their censers in figure-eight patterns that leave lingering trails of ember-ash, then slam the white-hot iron head directly into the ground to create an expanding ring of fire.
+
+**Memory-Marrow Drop:** Martyr's Brand (Middle Ring — Aspect): Drive a spectral iron spike into your own chest, sacrificing 15% of your maximum HP to ignite your equipped weapon in violet flame for 30 seconds.
+
+### 5. Flesh-Weaver Suturer
+
+**Location:** Sunken Vaults, Flesh-Weaver Sanctums
+
+**Visual Design:** Tall, spindly surgeons wearing bloodstained leather aprons and masks stitched from pale, mismatched faces. Grafted onto their backs are two extra pairs of skeletal arms, each clutching surgical bone-saws, forceps, or syringes filled with black ichor.
+
+**Behavior & Attack Patterns:** Keeps at mid-range, darting backward while hurling poisoned bone-needles. If the player closes the gap, the Suturer unleashes a flurry of six-armed slashes that inflict heavy Bleed buildup, before attempting to inject the player with a paralytic toxin that spikes the Withering Meter.
+
+**Memory-Marrow Drop:** Grafted Reflexes (Outer Ring — Parasite): Sprout a small, withered third arm from your ribcage that automatically parries projectiles when you are not actively attacking.
+
+## Mini-Bosses
+
+### 6. The Ossuary Amalgam (The Bone-Choir)
+
+**Location:** Deepest Shaft of the Ossuary Mines
+
+**Visual Design:** A grotesque, centipede-like monstrosity formed from dozens of miners fused together by calcified ash and melted iron. Dozens of pale arms claw wildly along its flanks to propel its massive bulk, while a cluster of fused skulls sits atop its head, screaming in discordant harmony.
+
+**Combat Mechanics & Phases:**
+
+- **Phase 1:** Slams its colossal torso into the cavern floor, sending shockwaves down the narrow mine shaft while spitting barrages of sharp bone-shards from its skull-cluster.
+- **Phase 2 (Below 50% HP):** Its fused ribcage splits open, revealing a pulsing core of violet soul-ore. Its screaming intensifies, rapidly building the player's Withering Meter whenever they look directly at its head, forcing the player to circle behind its crushing limb-sweeps to strike the exposed core.
+
+**Unique Memory-Marrow Drop:** Choir of the Damned (Middle Ring — Aspect): Unleash a piercing, multi-voiced shriek from your chest that shatters enemy posture gauges in a wide frontal cone and interrupts spellcasting.
+
+### 7. Sister Vespera, The Unbound Matron
+
+**Location:** The Ash-Bridge before the High Ossuary
+
+**Visual Design:** A former High Keeper of the Cinder-Church who has flayed the skin from her upper torso, exposing ribs wrapped in barbed silver wire. She floats inches above the ash-covered stone, wielding a jagged, two-handed executioner's scythe forged from petrified saint-bones.
+
+**Combat Mechanics & Phases:**
+
+- **Phase 1:** Uses sweeping scythe arcs with deceptive delay, paired with Mist-Step teleports that leave behind exploding decoys of hardened ash.
+- **Phase 2 (Below 50% HP):** She plunges her scythe into her own chest, igniting her exposed ribs in freezing violet fire. Her scythe swings now launch crescent waves of black frost, and she will periodically attempt a grab attack that drains your accumulated Slag-Echoes to heal herself.
+
+**Unique Memory-Marrow Drop:** Wraith-Step (Inner Ring — Vessel): Replaces your dodge with a seamless, invisible phase-shift through enemy attacks; passing directly through a foe leaves a delayed frost-mine inside their chest.
+
+## Bestiary Summary & Progression Scaling
+
+| Enemy / Boss | Threat Tier | Primary Status Effect | Slag-Echo Yield | Best Counter-Tactic |
+| --- | --- | --- | --- | --- |
+| Calcified Husk | Common | Calcification | Low | Blunt/Strike damage to shatter stone skin |
+| Mire-Leaper | Common | Blight / Bleed | Low | Deflecting pounces to instantly Fracture posture |
+| Tallow-Thrall | Common | Burn / Explosion | Medium | Fire arrows or thrust attacks at range |
+| Cinder-Flagellant | Elite | Burn | High | Baiting ground-slams to punish long recovery |
+| Flesh-Weaver Suturer | Elite | Bleed / Withering | High | Aggressive close-quarters pressure to break poise |
+| The Ossuary Amalgam | Mini-Boss | Withering / Stagger | Very High | Flanking behind the screaming skulls to hit the core |
+| Sister Vespera | Mini-Boss | Frostbite / Echo-Drain | Very High | Parrying delayed scythe sweeps; dodging grabs |
+
 ## Weapon & Item Descriptions
 
 ### Flensing Hook (Starting Weapon - Tallow-Skinner)
