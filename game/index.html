@@ -5,7 +5,9 @@
 </style></head><body><div id="veil"></div><div id="entry"><article><p>— A GRAVE-WARDEN RETURNS —</p><h1>THE MARROW-CINDER</h1><h2>Barrow's End - a first walk</h2><p>The spire is silent. The mist is not.</p><small id="hint">Click to enter - WASD to walk, mouse to look, ESC to release</small><p id="error"></p></article></div><div id="location" class="walk-ui" aria-hidden="true">BARROW'S END<hr></div><div id="whisper" class="walk-ui" role="status" aria-live="polite"></div><div id="controls" class="walk-ui">WASD walk - mouse look - ESC release</div><div id="pause" class="hidden"><article><h1>THE MARROW-CINDER</h1><h2>The mist waits.</h2><button id="resume" type="button">Resume</button><p>WASD walk - mouse look - ESC release</p></article></div><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script><script type="module">
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-// All geometry and surface maps are generated here. No external assets.
+// Procedural village; rigged Quaternius townsfolk with procedural fallbacks.
+// ===== TOWNSFOLK TUNING =====
+const HUMAN_BODY_WIDTH=.94, FALLBACK_HEAD_SCALE=.72;
 const scene=new THREE.Scene(),fogColor=0x777b78;scene.background=new THREE.Color(fogColor);scene.fog=new THREE.FogExp2(fogColor,.032);
 const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.6));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.08;document.body.prepend(renderer.domElement);
 const camera=new THREE.PerspectiveCamera(68,innerWidth/innerHeight,.08,160);camera.rotation.order='YXZ';camera.position.set(0,1.72,32);
@@ -28,7 +30,7 @@ const glow=new THREE.MeshBasicMaterial({color:0x8252ba});mesh(new THREE.Cylinder
 // A cold well, its rope cut.
 mesh(new THREE.CylinderGeometry(1.1,1.2,.8,10,1,true),stone,-4,.4,5);mesh(new THREE.CircleGeometry(.96,12),dark,-4,.03,5).rotation.x=-Math.PI/2;for(const x of [-5.1,-2.9])box(wood,x,1.4,5,.15,2.8,.18);rod(v(-5.2,2.7,5),v(-2.8,2.7,5),.12);rod(v(-4,2.7,5),v(-4,1.5,5),.025);colliders.push({x:-4,z:5,w:1.45,d:1.45});
 // Eight readable gestures: reaching, kneeling, sheltering, and a slumped return.
-function statue(x,z,pose,scale=1,turn=0){const g=new THREE.Group();scene.add(g);g.position.set(x,0,z);g.rotation.y=turn;g.scale.setScalar(scale);const crouch=pose===2||pose===3;const hip=crouch?.59:.93,shoulder=crouch?1.04:1.47;mesh(new THREE.CylinderGeometry(.19,.24,shoulder-hip,6),bone,0,(hip+shoulder)/2,0,1,1,1,g);mesh(sphereGeo,bone,pose===3?.18:0,shoulder+.23,.02,.16,.21,.16,g);for(const s of [-1,1]){const knee=v(s*.13,.45,crouch?.32:.02);rod(v(s*.13,hip,0),knee,.09,bone,g);rod(knee,v(s*.18,.08,crouch?.03:.08),.075,bone,g);const elbow=v(s*.37,pose===0?1.62:shoulder-.2,pose===0?-.25:.22);const hand=v(s*(pose===2?.23:.48),pose===0?1.86:pose===1?1.46:.7,pose===0?-.57:.4);rod(v(s*.22,shoulder,0),elbow,.075,bone,g);rod(elbow,hand,.06,bone,g);mesh(sphereGeo,bone,hand.x,hand.y,hand.z,.07,.09,.07,g)}const dust=mesh(new THREE.CircleGeometry(.55,12),stone,0,.012,0,1,1,1,g);dust.rotation.x=-Math.PI/2;colliders.push({x,z,w:.5*scale,d:.5*scale})}
+function statue(x,z,pose,scale=1,turn=0){const g=new THREE.Group();scene.add(g);g.position.set(x,0,z);g.rotation.y=turn;g.scale.setScalar(scale);const crouch=pose===2||pose===3;const hip=crouch?.59:.93,shoulder=crouch?1.04:1.47;mesh(new THREE.CylinderGeometry(.19,.24,shoulder-hip,6),bone,0,(hip+shoulder)/2,0,1,1,1,g);mesh(sphereGeo,bone,pose===3?.18:0,shoulder+.23,.02,.16*FALLBACK_HEAD_SCALE,.21*FALLBACK_HEAD_SCALE,.16*FALLBACK_HEAD_SCALE,g);for(const s of [-1,1]){const knee=v(s*.13,.45,crouch?.32:.02);rod(v(s*.13,hip,0),knee,.09,bone,g);rod(knee,v(s*.18,.08,crouch?.03:.08),.075,bone,g);const elbow=v(s*.37,pose===0?1.62:shoulder-.2,pose===0?-.25:.22);const hand=v(s*(pose===2?.23:.48),pose===0?1.86:pose===1?1.46:.7,pose===0?-.57:.4);rod(v(s*.22,shoulder,0),elbow,.075,bone,g);rod(elbow,hand,.06,bone,g);mesh(sphereGeo,bone,hand.x,hand.y,hand.z,.07,.09,.07,g)}const dust=mesh(new THREE.CircleGeometry(.55,12),stone,0,.012,0,1,1,1,g);dust.rotation.x=-Math.PI/2;colliders.push({x,z,w:.5*scale,d:.5*scale})}
 // Load real Kenney characters; remove glTF texture references before parsing.
 const statueStatus=window.statueStatus=[];
 // Exact deformed-vertex grounding avoids cached bind-pose/skinned bounding boxes.
@@ -40,7 +42,14 @@ async function character(file,x,z,pose,height,turn){
  const status={file,x,z,pose,targetHeight:height,state:'loading'};statueStatus.push(status);
  try{
   const url='../assets/packs/kenney-mini-characters/Models/GLB%20format/'+file+'.glb';
-  const response=await fetch(url);if(!response.ok)throw new Error('HTTP '+response.status);
+  const humanBase='../assets/packs/quaternius-universal-base-characters/Base%20Characters/Godot%20-%20UE/';
+  const humanFile=file.includes('female')?'Superhero_Female_FullBody.gltf':'Superhero_Male_FullBody.gltf';
+  const response=await fetch(humanBase+humanFile);if(!response.ok)throw new Error('HTTP '+response.status);
+  const humanJSON=await response.json();
+  humanJSON.materials=[{name:'calcified'}];for(const m of humanJSON.meshes||[])for(const p of m.primitives)p.material=0;
+  delete humanJSON.textures;delete humanJSON.images;delete humanJSON.samplers;
+  const gltf=await loader.parseAsync(JSON.stringify(humanJSON),humanBase),model=gltf.scene;model.scale.x=HUMAN_BODY_WIDTH;model.updateMatrixWorld(true);
+  /* Legacy Kenney GLB path and parser retained for reference (not loaded).
   const bytes=await response.arrayBuffer(),view=new DataView(bytes);
   if(view.getUint32(0,true)!==0x46546c67)throw new Error('Invalid GLB');
   const jsonLength=view.getUint32(12,true);const json=JSON.parse(new TextDecoder().decode(new Uint8Array(bytes,20,jsonLength)));
@@ -51,14 +60,14 @@ async function character(file,x,z,pose,height,turn){
   const tail=new Uint8Array(bytes,20+jsonLength),rebuilt=new ArrayBuffer(20+padded+tail.length),rv=new DataView(rebuilt);
   rv.setUint32(0,0x46546c67,true);rv.setUint32(4,2,true);rv.setUint32(8,rebuilt.byteLength,true);rv.setUint32(12,padded,true);rv.setUint32(16,0x4e4f534a,true);
   new Uint8Array(rebuilt,20,padded).fill(32);new Uint8Array(rebuilt,20,encoded.length).set(encoded);new Uint8Array(rebuilt,20+padded).set(tail);
-  const gltf=await loader.parseAsync(rebuilt,''),model=gltf.scene;model.updateMatrixWorld(true);
+  */
   const bounds=new THREE.Box3().setFromObject(model),native=bounds.getSize(new THREE.Vector3()).y;
   if(!Number.isFinite(native)||native<.01)throw new Error('Invalid model height');status.nativeHeight=native;
-  const wrapper=new THREE.Group();wrapper.add(model);const scale=height/native;model.scale.setScalar(scale);model.position.y=-bounds.min.y*scale;
+  const wrapper=new THREE.Group();wrapper.add(model);const scale=height/native;model.scale.set(scale*HUMAN_BODY_WIDTH,scale,scale);model.position.y=-bounds.min.y*scale;
   const tint=bone.clone();tint.color.multiplyScalar(.94+statueStatus.indexOf(status)*.008);
   let meshes=0;model.traverse(o=>{if(o.isMesh){o.material=tint;meshes++;o.frustumCulled=false}});
   // Pose the actual skinned model's named bones; no animation mixer (frozen forever).
-  const limb=(name,rx,rz)=>{const b=model.getObjectByName(name);if(b){b.rotation.x+=rx;b.rotation.z+=rz}};
+  const limb=(name,rx,rz)=>{const aliases={'head':'Head','arm-left':'upperarm_l','arm-right':'upperarm_r','leg-left':'thigh_l','leg-right':'thigh_r'};const b=model.getObjectByName(aliases[name]||name);if(b){b.rotation.x+=rx;b.rotation.z+=rz}};
   if(pose===0){limb('arm-left',-1.15,-.45);limb('arm-right',-.9,.55)}
   if(pose===1){limb('arm-left',-.65,-.8);limb('arm-right',-.85,.75);limb('head',.2,0)}
   if(pose===2){limb('leg-left',-.48,0);limb('leg-right',.4,0);limb('arm-left',.3,-.9);limb('arm-right',-.3,.9)}
